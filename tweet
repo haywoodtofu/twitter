@@ -1,0 +1,37 @@
+from selenium import webdriver
+from time import sleep
+
+browser = webdriver.Firefox()
+browser.get('https://twitter.com/')
+sleep(5) # to account for lag
+
+# opens twitter and clicks log in
+def login(username, password):
+    elem = browser.find_element_by_css_selector('a.r-p1n3y5 > div:nth-child(1) > span:nth-child(1) > span:nth-child(1)')
+    elem.click()
+    userElem = browser.find_element_by_css_selector('div.css-1dbjc4n:nth-child(6) > label:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > input:nth-child(1)')
+    userElem.send_keys(username)
+    passElem = browser.find_element_by_css_selector('div.css-1dbjc4n:nth-child(7) > label:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > input:nth-child(1)')
+    passElem.send_keys(password)
+    passElem.submit()
+
+def tweet(message, sec=2):
+    tweet = browser.find_element_by_css_selector('a.r-urgr8i > div:nth-child(1) > span:nth-child(1) > div:nth-child(1) > div:nth-child(1) > span:nth-child(1) > span:nth-child(1)')
+    # print(tweet is True)
+    tweet.click()
+
+    sleep(1)
+
+    text = browser.find_element_by_css_selector('.notranslate')
+    text.send_keys(message)
+    try:
+        submit = browser.find_element_by_css_selector('div.r-urgr8i:nth-child(4)')
+        submit.click()
+    except:
+        print('oops')
+
+    sleep(sec)
+
+
+
+
